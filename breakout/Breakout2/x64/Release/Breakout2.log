@@ -1,0 +1,92 @@
+﻿  Ball.cpp
+C:\Users\Andreja\breakout\Breakout2\Ball.cpp(9,37): warning C4305: 'initializing': truncation from 'double' to 'const float'
+C:\Users\Andreja\breakout\Breakout2\Ball.cpp(29,11): warning C4244: 'initializing': conversion from 'sf::Int32' to 'float', possible loss of data
+C:\Users\Andreja\breakout\Breakout2\Ball.cpp(43,23): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\Andreja\breakout\Breakout2\Ball.cpp(45,54): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\Andreja\breakout\Breakout2\Ball.cpp(49,26): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\Andreja\breakout\Breakout2\Ball.cpp(51,66): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+  Brick.cpp
+C:\Users\Andreja\breakout\Breakout2\Brick.cpp(61,59): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andreja\breakout\Breakout2\Brick.cpp(61,51): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andreja\breakout\Breakout2\Brick.cpp(61,44): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andreja\breakout\Breakout2\Brick.cpp(61,37): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andreja\breakout\Breakout2\Brick.cpp(78,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Andreja\breakout\Breakout2\Brick.cpp(79,17): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  BrickData.cpp
+  Game.cpp
+C:\Users\Andreja\breakout\Breakout2\Game.cpp(37,105): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andreja\breakout\Breakout2\Game.cpp(37,38): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andreja\breakout\Breakout2\Game.cpp(36,73): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andreja\breakout\Breakout2\Game.cpp(117,94): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\Andreja\breakout\Breakout2\Game.cpp(117,63): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+C:\Users\Andreja\breakout\Breakout2\Game.cpp(129,26): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Level.cpp
+C:\Users\Andreja\breakout\Breakout2\Level.cpp(27,20): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andreja\breakout\Breakout2\Level.cpp(28,23): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  LevelManager.cpp
+  main.cpp
+  Parameters.cpp
+  Player.cpp
+C:\Users\Andreja\breakout\Breakout2\Player.cpp(15,39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andreja\breakout\Breakout2\Player.cpp(34,15): warning C4244: 'initializing': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andreja\breakout\Breakout2\Player.cpp(35,16): warning C4244: 'initializing': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+  Position.cpp
+  SoundManager.cpp
+  Generating code
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+C:\Users\Andreja\breakout\Breakout2\Level.cpp(93): warning C4715: 'Level::getBrickDataForType': not all control paths return a value
+  All 927 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Breakout2.vcxproj -> C:\Users\Andreja\breakout\Breakout2\x64\Release\Breakout2.exe
