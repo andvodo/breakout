@@ -1,69 +1,87 @@
 #include "Level.h"
+#include "Parameters.h"
+#include <sstream>
 
 using namespace tinyxml2;
-using namespace std;
 
-Level::Level(int level) {
-	Level::DecodeLevel(level);
+const char* LEVEL_FILE_PATH = "./Editor/Levels/Level";
+
+Level::Level(int level)
+{
+	decodeLevel(level);
 }
 
-std::string Level::getLevelFilePath(int level) {
-	stringstream ss;
-	ss << _filePath << level << ".xml";
-	string path;
-
-	ss >> path;
-	return path;
+std::string Level::getLevelFilePath(int level)
+{
+	return LEVEL_FILE_PATH + std::to_string(level) + ".xml";
 }
 
-void Level::DecodeLevel(int level) {
+Level::Level(const Level& level)
+{
+	rowCount = level.rowCount;
+	columnCount = level.columnCount;
+	rowSpacing = level.rowSpacing;
+	columnSpacing = level.columnSpacing;
+	backgroundTexture = level.backgroundTexture;
+	brickTypeData = level.brickTypeData;
+	this->bricks = bricks;
+}
+
+void Level::decodeLevel(int level)
+{
 	XMLDocument levelDocument;
-	int i = levelDocument.LoadFile(Level::getLevelFilePath(level).c_str());
+	int load = levelDocument.LoadFile(Level::getLevelFilePath(level).c_str());
+	if (load != 0) {
+		throw new NoLevelException();
+	}
 
 	//level attributes
 	XMLElement* levelElement = levelDocument.FirstChildElement("Level");
-	_rowCount = atoi(levelElement->Attribute("RowCount"));
-	_columnCount = atoi(levelElement->Attribute("ColumnCount"));
-	_rowSpacing = atoi(levelElement->Attribute("RowSpacing"));
-	_columnSpacing = atoi(levelElement->Attribute("ColumnSpacing"));
-	_backgrondTexture = levelElement->Attribute("BackgroundTexture");
+	rowCount = atoi(levelElement->Attribute("RowCount"));
+	columnCount = atoi(levelElement->Attribute("ColumnCount"));
+	rowSpacing = atoi(levelElement->Attribute("RowSpacing"));
+	columnSpacing = atoi(levelElement->Attribute("ColumnSpacing"));
+	backgroundTexture = levelElement->Attribute("BackgroundTexture");
 
 	//brick types
 	XMLElement* brickTypesElement = levelElement->FirstChildElement("BrickTypes");
 	if (brickTypesElement) {
 		XMLElement* brickTypeElement = brickTypesElement->FirstChildElement("BrickType");
 		while (brickTypeElement) {
-			DecodeBrickData(brickTypeElement);
+			decodeBrickData(brickTypeElement);
 			brickTypeElement = brickTypeElement->NextSiblingElement("BrickType");
 		}
 	}
 
 	//bricks
 	XMLElement* bricksElement = levelElement->FirstChildElement("Bricks");
-	string text = bricksElement->GetText();
-	string stringToParse;
-	stringstream sstream;
+	std::string text = bricksElement->GetText();
+	std::string stringToParse;
+	std::stringstream sstream;
 	sstream << text;
 	while (getline(sstream, stringToParse)) {
-		stringstream rowStream;
+		std::stringstream rowStream;
 		rowStream << stringToParse;
-		vector<Brick> row = vector<Brick>();
+		std::vector<Brick> row;
 		while (getline(rowStream, stringToParse, ' ')) {
-			if (stringToParse == "") continue;
-			Brick brick = Brick(getBrickTypeForString(stringToParse));
-			row.push_back(brick);
+			if (stringToParse.empty()) {
+				continue;
+			}
+			row.emplace_back(getBrickTypeForString(stringToParse));
 		}
-		if (row.size() > 0) _bricks.push_back(row);
+		if (row.size() > 0) {
+			bricks.push_back(std::move(row)); //!!!!
+		}
 	}
 }
 
-void Level::DecodeBrickData(XMLElement* brickElement) {
-	string id = brickElement->Attribute("Id");
+void Level::decodeBrickData(const XMLElement* brickElement) {
+	std::string id = brickElement->Attribute("Id");
 	BrickType brickType = getBrickTypeForString(id);
 
-	string texture = brickElement->Attribute("Texture");
+	std::string texture = brickElement->Attribute("Texture");
 	int hitPoints = atoi(brickElement->Attribute("HitPoints"));
-	string hitSound = brickElement->Attribute("HitSound");
+	std::string hitSound = brickElement->Attribute("HitSound");
 
 	BrickData* brickData;
 
@@ -71,30 +89,60 @@ void Level::DecodeBrickData(XMLElement* brickElement) {
 		brickData = new BrickData(texture, hitPoints, hitSound);
 	}
 	else {
-		string breakSound = brickElement->Attribute("BreakSound");
+		std::string breakSound = brickElement->Attribute("BreakSound");
 		int breakScore = atoi(brickElement->Attribute("BreakScore"));
 
 		brickData = new BrickData(texture, hitPoints, hitSound, breakSound, breakScore);
 	}
 
-	_brickTypeData[brickType] = *brickData;
+	brickTypeData.emplace(brickType, *brickData);
 }
 
-BrickType Level::getBrickTypeForString(std::string str) {
-	return str == "S" ? BrickType::Soft :
-		(str == "M" ? BrickType::Medium : (str == "H" ? BrickType::Hard :
-			(str == "I" ? BrickType::Impenetrable : BrickType::None)));
+BrickType Level::getBrickTypeForString(const std::string& brickTypeString)
+{
+	return brickTypeString == "S" ? BrickType::Soft :
+			(brickTypeString == "M" ? BrickType::Medium :
+				(brickTypeString == "H" ? BrickType::Hard :
+					(brickTypeString == "I" ? BrickType::Impenetrable :
+						BrickType::None)));
 }
 
-BrickData* Level::getBrickDataForType(BrickType type) {
-	if (_brickTypeData.find(type) != _brickTypeData.end()) {
-		return &(_brickTypeData.at(type));
+const BrickData& Level::getBrickDataForType(BrickType type) const
+{
+	auto it = brickTypeData.find(type);
+	if (it != brickTypeData.end()) {
+		return it->second;
 	}
 }
 
-vector<vector<Brick>>& Level::getBricks() {
-	return _bricks;
+const std::vector<std::vector<Brick>>& Level::getBricks()
+{
+	return bricks;
 }
 
-Level::~Level() {
+void Level::onHit(int row, int column)
+{
+	bricks.at(row).at(column).onHit();
+}
+
+void Level::setAppearance()
+{
+	int winScore = 0;
+
+	float brickWidth = (Parameters::getWindowWidth() - 2 * Parameters::getWallThickness() - ((columnCount + 1) * columnSpacing))
+		/ columnCount;
+	float brickHeight = ((Parameters::getWindowHeight() - 2 * Parameters::getWallThickness() - Parameters::getBottomOffset())
+		* Parameters::getMaxBrickArea() - ((rowCount + 1) * rowSpacing)) / rowCount;
+	brickHeight = brickHeight > brickWidth / 2 ? brickWidth / 2 : brickHeight;
+	for (int i = 0; i < bricks.size(); i++) {
+		float yPos = rowSpacing * (i + 1) + i * brickHeight;
+		for (int j = 0; j < bricks.at(i).size(); j++) {
+			float xPos = columnSpacing * (j + 1) + j * brickWidth;
+			Brick& brick = bricks.at(i).at(j);
+			BrickType brickType = brick.getType();
+			int breakScore = brickType == BrickType::None ? 0 : getBrickDataForType(brickType).getBreakScore();
+			brick.setAppearance(brickWidth, brickHeight, xPos, yPos, breakScore);
+			winScore += breakScore;
+		}
+	}
 }

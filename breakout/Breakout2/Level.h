@@ -1,40 +1,41 @@
 #pragma once
 
-#include<stdio.h>
-#include<string>
-#include<vector>
-#include <sstream>
-#include<map>
-#include "tinyxml2.h"
+#include <cstdio>
+#include <map>
+#include <string>
+#include <vector>
 #include "Brick.h"
+#include "tinyxml2.h"
+
+class NoLevelException {};
 
 class Level
 {
 	private:
-		int _rowCount;
-		int _columnCount;
-		float _rowSpacing;
-		float _columnSpacing;
-		std::string _backgrondTexture;
-		const char* _filePath = "./Editor/Levels/Level";
-		std::map<BrickType, BrickData> _brickTypeData;
-		std::vector<std::vector<Brick>> _bricks;
+		int rowCount, columnCount, winScore;
+		float rowSpacing, columnSpacing;
+		std::string backgroundTexture;
+		std::map<BrickType, BrickData> brickTypeData;
+		std::vector<std::vector<Brick>> bricks;
 
 		std::string getLevelFilePath(int level);
-		void DecodeLevel(int level);
-		void DecodeBrickData(tinyxml2::XMLElement* brickElement);
-		BrickType getBrickTypeForString(std::string str);
+		void decodeLevel(int level);
+		void decodeBrickData(const tinyxml2::XMLElement* brickElement);
+		BrickType getBrickTypeForString(const std::string& brickTypeString);
 
 	public:
 		Level(int level);
-		~Level();
+		Level(const Level& level);
 
-		int getRowCount() { return _rowCount; }
-		int getColumnCount() { return _columnCount; }
-		float getRowSpacing() { return _rowSpacing; }
-		float getColumnSpacing() { return _columnSpacing; }
-		std::string getBackgrondTexture() { return _backgrondTexture; }
+		int getRowCount() const { return rowCount; }
+		int getColumnCount() const { return columnCount; }
+		float getRowSpacing() const { return rowSpacing; }
+		float getColumnSpacing() const { return columnSpacing; }
+		int getWinScore() const { return winScore; }
+		const std::string& getBackgroundTexture() const { return backgroundTexture; }
 
-		BrickData* getBrickDataForType(BrickType type);
-		std::vector<std::vector<Brick>>& getBricks();
+		const BrickData& getBrickDataForType(BrickType type) const;
+		const std::vector<std::vector<Brick>>& getBricks();
+		void onHit(int row, int column);
+		void setAppearance();
 };

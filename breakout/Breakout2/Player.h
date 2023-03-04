@@ -1,24 +1,24 @@
 #pragma once
+
 #include "SFML/Graphics.hpp"
 #include "Parameters.h"
 
 class Player
 {
 	private:
-		Player();
-		static Player* _instance;
-		sf::RectangleShape _rectangleShape;
-		float _width, _height;
-		sf::Vector2f _position;
-		bool _playing;
+		sf::RectangleShape rectangleShape;
+		float width, height;
+		sf::Vector2f position;
+		bool playing;
 		void setStartPosition();
+		void setPlayerAppearance();
 
 	public:
-		static Player* getInstance();
-		float getWidth() { return _width; }
-		float getHeight() { return _height; }
-		void update(sf::Vector2i windowPosition);
-		sf::RectangleShape toDrawable() { return _rectangleShape; }
+		Player();
+		float getWidth() const { return width; }
+		float getHeight() const { return height; }
+		void update();
+		const sf::RectangleShape& toDrawable() const { return rectangleShape; }
 		void setPlaying(bool playing);
-		sf::Vector2f getPosition();
+		sf::Vector2f getPosition() const;
 };

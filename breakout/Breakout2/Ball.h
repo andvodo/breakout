@@ -7,24 +7,24 @@
 class Ball
 {
 	private:
-		float _radius = 5;
-		float _speed = 2;
-		bool _playing;
-		sf::Clock _clock;
-		sf::Vector2f _position;
-		sf::Vector2f _direction;
-		sf::CircleShape _circleShape;
+		float radius;
+		float speed;
+		bool playing;
+		sf::Clock clock;
+		sf::Vector2f position;
+		sf::Vector2f direction;
+		sf::CircleShape circleShape;
 		void setStartPosition();
 		sf::Vector2f valueForDoubleAngle(int xSgn, int ySgn);
 		sf::Vector2f valueForHalfAngle(int xSgn, int ySgn);
 
 	public:
 		Ball();
-		float getSpeed() { return _speed; }
-		float getRadius() { return _radius; }
-		sf::Vector2f getPosition() { return _position; }
-		sf::CircleShape toDrawable() { return _circleShape; }
-		void bounce(Position position);
+		float getSpeed() { return speed; }
+		float getRadius() { return radius; }
+		sf::Vector2f getPosition() { return position; }
+		const sf::CircleShape& toDrawable() const { return circleShape; }
+		void bounce(Position hitPosition);
 		void update();
 		void setPlaying(bool playing);
 		~Ball();

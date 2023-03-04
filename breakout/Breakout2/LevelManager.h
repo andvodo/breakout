@@ -1,15 +1,16 @@
 #pragma once
+#include <cstdio>
+#include <map>
 #include "Level.h"
 
 class LevelManager
 {
 	private:
-		static int currentLevelNum;
+		static std::map<int, Level> levels;
+		static const Level* getLevel(int level);
 		static Level* currentLevel;
-		const std::string levelFilePath = "Editor/Levels/Level";
 
 	public:
-		static Level* getFirstLevel();
-		static Level* getNextLevel();
+		static bool setLevel(int level);
 		static Level* getCurrentLevel();
 };

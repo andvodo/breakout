@@ -1,24 +1,40 @@
+#include "Game.h"
 #include "LevelManager.h"
 #include "tinyxml2.h"
 #include <stdio.h>
+#include <cassert>
 
-int LevelManager::currentLevelNum = 0;
 Level* LevelManager::currentLevel = nullptr;
+std::map<int, Level> LevelManager::levels;
 
-Level* LevelManager::getFirstLevel() {
-	currentLevelNum = 1;
-	if (currentLevel != nullptr) delete currentLevel;
-	currentLevel = new Level(currentLevelNum);
-	return currentLevel;
+const Level* LevelManager::getLevel(int level)
+{
+	auto it = levels.find(level);
+	if (it != levels.end()) {
+		return &it->second;
+	} else {
+		try {
+			levels.emplace(level - 1, Level(level));
+			return &levels.at(level - 1);
+		}
+		catch (NoLevelException e) {
+			return nullptr;
+		}
+	}
 }
 
-Level* LevelManager::getNextLevel() {
-	currentLevelNum++;
-	if (currentLevel != nullptr) delete currentLevel;
-	currentLevel = new Level(currentLevelNum);
-	return currentLevel;
+bool LevelManager::setLevel(int level)
+{
+	assert(level > 0);
+	const Level* levelObj = getLevel(level);
+	if (levelObj) {
+		currentLevel = new Level(*levelObj);
+		return true;
+	}
+	return false;
 }
 
-Level* LevelManager::getCurrentLevel() {
+Level* LevelManager::getCurrentLevel()
+{
 	return currentLevel;
 }

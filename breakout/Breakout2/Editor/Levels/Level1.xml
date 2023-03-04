@@ -1,10 +1,10 @@
 <Level
- RowCount='3'
+RowCount='3'
 ColumnCount='15'
 RowSpacing='3'
 ColumnSpacing='3'
- BackgroundTexture='Textures/Boards/Board_01.png'>
- <BrickTypes>
+BackgroundTexture='Textures/Boards/Board_01.png'>
+<BrickTypes>
 <!-- Soft Brick -->
 <BrickType
  Id='S'

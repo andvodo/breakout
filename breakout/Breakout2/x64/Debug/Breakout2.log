@@ -1,24 +1,102 @@
 ﻿  Ball.cpp
-C:\Users\Andreja\breakout\Breakout2\Ball.cpp(9,37): warning C4305: 'initializing': truncation from 'double' to 'const float'
-C:\Users\Andreja\breakout\Breakout2\Ball.cpp(31,11): warning C4244: 'initializing': conversion from 'sf::Int64' to 'float', possible loss of data
-C:\Users\Andreja\breakout\Breakout2\Ball.cpp(45,23): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+C:\Users\Andreja\breakout\breakout\Breakout2\Ball.cpp(10,37): warning C4305: 'initializing': truncation from 'double' to 'const float'
+C:\Users\Andreja\breakout\breakout\Breakout2\Ball.cpp(32,11): warning C4244: 'initializing': conversion from 'sf::Int64' to 'float', possible loss of data
+C:\Users\Andreja\breakout\breakout\Breakout2\Ball.cpp(46,23): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-C:\Users\Andreja\breakout\Breakout2\Ball.cpp(47,54): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+C:\Users\Andreja\breakout\breakout\Breakout2\Ball.cpp(48,54): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-C:\Users\Andreja\breakout\Breakout2\Ball.cpp(51,26): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+C:\Users\Andreja\breakout\breakout\Breakout2\Ball.cpp(52,26): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-C:\Users\Andreja\breakout\Breakout2\Ball.cpp(53,66): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+C:\Users\Andreja\breakout\breakout\Breakout2\Ball.cpp(54,66): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-  Breakout2.vcxproj -> C:\Users\Andreja\breakout\Breakout2\x64\Debug\Breakout2.exe
+  Brick.cpp
+C:\Users\Andreja\breakout\breakout\Breakout2\Brick.cpp(68,55): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andreja\breakout\breakout\Breakout2\Brick.cpp(68,48): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andreja\breakout\breakout\Breakout2\Brick.cpp(68,42): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andreja\breakout\breakout\Breakout2\Brick.cpp(68,36): warning C4244: 'argument': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andreja\breakout\breakout\Breakout2\Brick.cpp(88,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Andreja\breakout\breakout\Breakout2\Brick.cpp(89,17): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Game.cpp
+C:\Users\Andreja\breakout\breakout\Breakout2\Game.cpp(57,26): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  GameScreen.cpp
+C:\Users\Andreja\breakout\breakout\Breakout2\GameScreen.cpp(115,13): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andreja\breakout\breakout\Breakout2\GameScreen.cpp(138,61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andreja\breakout\breakout\Breakout2\GameScreen.cpp(143,65): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andreja\breakout\breakout\Breakout2\GameScreen.cpp(151,95): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andreja\breakout\breakout\Breakout2\GameScreen.cpp(151,63): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andreja\breakout\breakout\Breakout2\GameScreen.cpp(155,99): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andreja\breakout\breakout\Breakout2\GameScreen.cpp(155,65): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andreja\breakout\breakout\Breakout2\GameScreen.cpp(157,58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andreja\breakout\breakout\Breakout2\GameScreen.cpp(159,100): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andreja\breakout\breakout\Breakout2\GameScreen.cpp(159,66): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andreja\breakout\breakout\Breakout2\GameScreen.cpp(161,96): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andreja\breakout\breakout\Breakout2\GameScreen.cpp(163,97): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andreja\breakout\breakout\Breakout2\GameScreen.cpp(163,65): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Level.cpp
+C:\Users\Andreja\breakout\breakout\Breakout2\Level.cpp(42,19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andreja\breakout\breakout\Breakout2\Level.cpp(43,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  LevelManager.cpp
+C:\Users\Andreja\breakout\breakout\Breakout2\LevelManager.cpp(20,27): warning C4101: 'e': unreferenced local variable
+  Generating Code...
+C:\Users\Andreja\breakout\breakout\Breakout2\Level.cpp(116): warning C4715: 'Level::getBrickDataForType': not all control paths return a value
+  Breakout2.vcxproj -> C:\Users\Andreja\breakout\breakout\Breakout2\x64\Debug\Breakout2.exe

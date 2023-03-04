@@ -8,13 +8,13 @@
 class Brick
 {
 	private:
-		BrickType _brickType;
-		int _breakScore;
-		float _xPos, _yPos;
-		float _width, _height;
+		BrickType brickType;
+		int breakScore;
+		float xPos, yPos;
+		float width, height;
 		void setType(BrickType brickType);
-		sf::Texture _texture;
-		sf::Sprite _sprite;
+		sf::Texture texture;
+		sf::Sprite sprite;
 		void refresh();
 		void loadTexture();
 
@@ -22,13 +22,12 @@ class Brick
 		void onHit();
 		Brick(BrickType brickType);
 		void setAppearance(float width, float height, float xPos, float yPos, int breakScore);
-		const BrickType getType();
-		int getBreakScore();
-		float getWidth() { return _width; }
-		float getHeight() { return _height; }
-		sf::Sprite toDrawable();
-		struct CollisionInfo getCollisionInfo(sf::Vector2f ballPosition, float radius);
-		~Brick();
+		const BrickType getType() const;
+		int getBreakScore() const;
+		float getWidth() { return width; }
+		float getHeight() { return height; }
+		const sf::Sprite& toDrawable() const;
+		struct CollisionInfo getCollisionInfo(sf::Vector2f ballPosition, float radius) const;
 };
 
 struct CollisionInfo {

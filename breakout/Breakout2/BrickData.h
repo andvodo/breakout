@@ -6,21 +6,20 @@
 class BrickData
 {
 private:
-	std::string _texture;
-	int _hitPoints;
-	std::string _hitSound;
-	std::string _breakSound;
-	int _breakScore;
+	int hitPoints;
+	int breakScore;
+	std::string texture;
+	std::string hitSound;
+	std::string breakSound;
 
 public:
 	BrickData(std::string texture, int hitPoints, std::string hitSound, std::string breakSound, int breakScore);
 	BrickData(std::string texture, int hitPoints, std::string hitSound);
-	BrickData() {}
-	std::string getTexture() { return _texture; }
-	int getHitPoints() { return _hitPoints; }
-	std::string getHitSound() { return _hitSound; }
-	std::string getBreakSound() { return _breakSound; }
-	int getBreakScore() { return _breakScore; }
+	const std::string& getTexture() const { return texture; }
+	int getHitPoints() { return hitPoints; }
+	const std::string& getHitSound() const { return hitSound; }
+	const std::string& getBreakSound() const { return breakSound; }
+	int getBreakScore() const { return breakScore; }
 };
 
 enum class BrickType {

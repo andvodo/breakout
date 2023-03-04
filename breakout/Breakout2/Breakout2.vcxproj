@@ -23,12 +23,12 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickData.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Parameters.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Position.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="tinyXml2.cpp" />
   </ItemGroup>
@@ -37,6 +37,8 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickData.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameScreen.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelManager.h" />
     <ClInclude Include="Parameters.h" />
@@ -143,12 +145,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>SFML_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Andreja\breakout\SFML-2.5.1\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Andreja\breakout\breakout\SFML-2.5.1\include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Andreja\breakout\SFML-2.5.1\lib;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Andreja\breakout\breakout\SFML-2.5.1\lib;</AdditionalLibraryDirectories>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;sfml-window-s-d.lib;sfml-graphics-s-d.lib;sfml-audio-s-d.lib;opengl32.lib;sfml-system-s-d.lib;sfml-network-s-d.lib;openal32.lib;winmm.lib;ws2_32.lib;freetype.lib;gdi32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
