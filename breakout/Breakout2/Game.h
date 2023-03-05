@@ -13,15 +13,11 @@ class Game
 		const Player& getPlayer() { return player; }
 		const Ball& getBall() { return ball; }
 		const GameScreen& getGameScreen() { return screen; }
-		int getScore() { return score; }
 		int getLevel() { return level; }
 		int getLives() { return lives; }
 		GameState getGameState() { return gameState; }
 
-		~Game();
-
 	private:
-		Game();
 		static Game* instance;
 
 		GameState gameState;
@@ -30,7 +26,7 @@ class Game
 		GameScreen screen;
 
 		bool playing, processingClick;
-		int level, score, lives;
+		int level, lives;
 
 		bool setGame();
 		void startGame();

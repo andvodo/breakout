@@ -24,7 +24,7 @@ class Ball
 		float getRadius() { return radius; }
 		sf::Vector2f getPosition() { return position; }
 		const sf::CircleShape& toDrawable() const { return circleShape; }
-		void bounce(Position hitPosition);
+		void bounce(Position hitPosition, float depth);
 		void update();
 		void setPlaying(bool playing);
 		~Ball();

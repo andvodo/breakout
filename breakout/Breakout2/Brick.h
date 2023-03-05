@@ -19,7 +19,7 @@ class Brick
 		void loadTexture();
 
 	public:
-		void onHit();
+		int onHit();
 		Brick(BrickType brickType);
 		void setAppearance(float width, float height, float xPos, float yPos, int breakScore);
 		const BrickType getType() const;

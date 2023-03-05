@@ -9,8 +9,12 @@ class LevelManager
 		static std::map<int, Level> levels;
 		static const Level* getLevel(int level);
 		static Level* currentLevel;
+		static int score;
 
 	public:
 		static bool setLevel(int level);
-		static Level* getCurrentLevel();
+		static const Level* getCurrentLevel();
+		static void onHit(int i, int j);
+		static int getScore() { return score; }
+		static bool levelCleared();
 };

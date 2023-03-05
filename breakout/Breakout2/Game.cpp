@@ -5,8 +5,6 @@ using namespace sf;
 
 Game* Game::instance = nullptr;
 
-Game::Game() { }
-
 Game* Game::get()
 {
     if (!instance) {
@@ -31,13 +29,13 @@ bool Game::setGame() {
         return false;
     }
 
-    score = 0;
     lives = Parameters::getPlayerLives();
     playing = false;
-    Level* currentLevel = LevelManager::getCurrentLevel();
-    currentLevel->setAppearance();
     if (gameState != GameState::GameLost) {
         screen.setAppearance();
+    }
+    else {
+        screen.updateAppearance(GameState::Intro);
     }
     gameState = GameState::Intro;
 
@@ -79,10 +77,9 @@ void Game::startGame() {
 
 void Game::update()
 {
-    if (score >= LevelManager::getCurrentLevel()->getWinScore()) {
+    if (LevelManager::levelCleared()) {
         ball.setPlaying(false);
         player.setPlaying(false);
-        score = 0;
 
         bool levelSet = LevelManager::setLevel(level + 1);
         if (levelSet) {
@@ -102,7 +99,8 @@ void Game::update()
 
     player.update();
     ball.update();
-    if (ball.getPosition().y + ball.getRadius() > Parameters::getPlaygroundBottom()) {
+    screen.update();
+    if (ball.getPosition().y + ball.getRadius() * 2 > Parameters::getPlaygroundBottom()) {
         playing = false;
         ball.setPlaying(false);
         player.setPlaying(false);
@@ -111,6 +109,7 @@ void Game::update()
             gameState = GameState::LostLife;
         } else {
             gameState = GameState::GameLost;
+            screen.updateAppearance(gameState);
         }
         screen.updateAppearance(gameState);
     }
@@ -119,8 +118,6 @@ void Game::update()
 void Game::setNewLevel()
 {
     ++level;
-    score = 0;
-    LevelManager::getCurrentLevel()->setAppearance();
     screen.updateAppearance(GameState::SetNewLevel);
 }
 
@@ -151,5 +148,3 @@ void Game::processClick()
     }
     processingClick = false;
 }
-
-Game::~Game() {}

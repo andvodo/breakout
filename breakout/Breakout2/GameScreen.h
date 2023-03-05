@@ -16,6 +16,7 @@ public:
 	sf::Vector2i getPosition() const;
 	void setAppearance();
 	void updateAppearance(GameState state);
+	void update();
 
 private:
 	sf::RenderWindow renderWindow;

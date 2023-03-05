@@ -24,7 +24,7 @@ Level::Level(const Level& level)
 	columnSpacing = level.columnSpacing;
 	backgroundTexture = level.backgroundTexture;
 	brickTypeData = level.brickTypeData;
-	this->bricks = bricks;
+	bricks = level.bricks;
 }
 
 void Level::decodeLevel(int level)
@@ -32,7 +32,7 @@ void Level::decodeLevel(int level)
 	XMLDocument levelDocument;
 	int load = levelDocument.LoadFile(Level::getLevelFilePath(level).c_str());
 	if (load != 0) {
-		throw new NoLevelException();
+		throw NoLevelException();
 	}
 
 	//level attributes
@@ -70,7 +70,7 @@ void Level::decodeLevel(int level)
 			row.emplace_back(getBrickTypeForString(stringToParse));
 		}
 		if (row.size() > 0) {
-			bricks.push_back(std::move(row)); //!!!!
+			bricks.emplace_back(std::move(row)); //!!!!
 		}
 	}
 }
@@ -115,19 +115,19 @@ const BrickData& Level::getBrickDataForType(BrickType type) const
 	}
 }
 
-const std::vector<std::vector<Brick>>& Level::getBricks()
+const std::vector<std::vector<Brick>>& Level::getBricks() const
 {
 	return bricks;
 }
 
-void Level::onHit(int row, int column)
+int Level::onHit(int row, int column)
 {
-	bricks.at(row).at(column).onHit();
+	return bricks.at(row).at(column).onHit();
 }
 
 void Level::setAppearance()
 {
-	int winScore = 0;
+	winScore = 0;
 
 	float brickWidth = (Parameters::getWindowWidth() - 2 * Parameters::getWallThickness() - ((columnCount + 1) * columnSpacing))
 		/ columnCount;
@@ -135,9 +135,9 @@ void Level::setAppearance()
 		* Parameters::getMaxBrickArea() - ((rowCount + 1) * rowSpacing)) / rowCount;
 	brickHeight = brickHeight > brickWidth / 2 ? brickWidth / 2 : brickHeight;
 	for (int i = 0; i < bricks.size(); i++) {
-		float yPos = rowSpacing * (i + 1) + i * brickHeight;
+		float yPos = Parameters::getWallThickness() + rowSpacing * (i + 1) + i * brickHeight;
 		for (int j = 0; j < bricks.at(i).size(); j++) {
-			float xPos = columnSpacing * (j + 1) + j * brickWidth;
+			float xPos = Parameters::getWallThickness() + columnSpacing * (j + 1) + j * brickWidth;
 			Brick& brick = bricks.at(i).at(j);
 			BrickType brickType = brick.getType();
 			int breakScore = brickType == BrickType::None ? 0 : getBrickDataForType(brickType).getBreakScore();

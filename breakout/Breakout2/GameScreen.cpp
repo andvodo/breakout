@@ -2,11 +2,13 @@
 #include "Game.h"
 #include "GameScreen.h"
 #include "LevelManager.h"
+#include <cassert>
 
 const char* TITLE = "Breakout";
 const char* GAME_OVER_MESSAGE = "GAME OVER";
-const char* WIN_MESSAGE = "You won!";
+const char* WIN_MESSAGE = "YOU WON!";
 const char* LIFE_LOST_MESSAGE = "You lost a life!";
+const int FONT_SIZE = 50;
 
 GameScreen::GameScreen()
 {
@@ -37,20 +39,15 @@ sf::Vector2i GameScreen::getPosition() const
 
 void GameScreen::display(GameState state)
 {
-    Game* game = Game::get();
-    int level = game->getLevel();
-    int score = game->getScore();
+    int level = Game::get()->getLevel();
+    int score = LevelManager::getScore();
 
-    score = 0;
     renderWindow.clear();
     renderWindow.draw(spriteBackground);
     const std::vector<std::vector<Brick>>& bricks = LevelManager::getCurrentLevel()->getBricks();
     for (const std::vector<Brick>& brickRow: bricks) {
         for (const Brick& brick: brickRow) {
             renderWindow.draw(brick.toDrawable());
-            if (brick.getType() == BrickType::None) {
-                score += brick.getBreakScore();
-            }
         }
     }
 
@@ -59,12 +56,11 @@ void GameScreen::display(GameState state)
     renderWindow.draw(rightBorder);
     renderWindow.draw(bottomBorder);
 
-    renderWindow.draw(Game::get()->getBall().toDrawable());
-
-    renderWindow.draw(Game::get()->getPlayer().toDrawable());
-
-    if (state != GameState::Playing) {
+    if (state == GameState::GameWon || state == GameState::GameLost) {
         renderWindow.draw(messageLabel);
+    } else {
+        renderWindow.draw(Game::get()->getBall().toDrawable());
+        renderWindow.draw(Game::get()->getPlayer().toDrawable());
     }
 
     renderWindow.draw(livesLabel);
@@ -75,6 +71,10 @@ void GameScreen::display(GameState state)
     renderWindow.display();
 }
 
+void GameScreen::update()
+{
+    scoreLabel.setString(std::to_string(LevelManager::getScore()));
+}
 
 void GameScreen::setAppearance()
 {
@@ -85,15 +85,25 @@ void GameScreen::setAppearance()
 
 void GameScreen::updateAppearance(GameState state)
 {
-    Game* game = Game::get();
-
     switch (state) {
     case GameState::SetNewLevel:
-        livesLabel.setString(std::to_string(game->getLives()));
-        scoreLabel.setString(std::to_string(game->getScore()));
-        levelLabel.setString(std::to_string(game->getLevel()));
+        livesLabel.setString(std::to_string(Game::get()->getLives()));
+        levelLabel.setString(std::to_string(Game::get()->getLevel()));
         break;
     case GameState::LostLife:
+        livesLabel.setString(std::to_string(Game::get()->getLives()));
+        break;
+    case GameState::GameLost:
+        messageLabel.setString(GAME_OVER_MESSAGE);
+        livesLabel.setString(std::to_string(Game::get()->getLives()));
+        break;
+    case GameState::Intro:
+        livesLabel.setString(std::to_string(Game::get()->getLives()));
+        levelLabel.setString(std::to_string(Game::get()->getLevel()));
+        scoreLabel.setString(std::to_string(LevelManager::getScore()));
+        break;
+    case GameState::GameWon:
+        messageLabel.setString(WIN_MESSAGE);
         break;
     }
 }
@@ -104,14 +114,13 @@ void GameScreen::setBackground() {
     image.loadFromFile(level->getBackgroundTexture());
     textureBackground.loadFromImage(image);
     spriteBackground.setTexture(textureBackground);
-    spriteBackground.setTextureRect(sf::IntRect(Parameters::getWallThickness(), Parameters::getPlaygroundBottom(),
-        Parameters::getWindowWidth() - 2 * Parameters::getWallThickness(), Parameters::getPlaygroundBottom() - Parameters::getWallThickness()));
+    spriteBackground.setTextureRect(sf::IntRect(0, 0,
+        Parameters::getWindowWidth(), Parameters::getPlaygroundBottom()));
 }
 
 void GameScreen::setLabels()
 {
-    //load texts
-    int fontSize = 50;
+    int fontSize = FONT_SIZE;
     float y = Parameters::getPlaygroundBottom() + Parameters::getBottomOffset() / 2 - fontSize / 2;
     float offsetFromWindowEdge = Parameters::getWindowHeight() - (y + fontSize);
     font.loadFromFile("./Fonts/font.ttf");
@@ -119,7 +128,6 @@ void GameScreen::setLabels()
     messageLabel.setFont(font);
     messageLabel.setCharacterSize(fontSize);
     messageLabel.setPosition(200, 200);
-    messageLabel.setString(TITLE);
 
     Game* game = Game::get();
 
@@ -131,7 +139,7 @@ void GameScreen::setLabels()
     scoreLabel.setFont(font);
     scoreLabel.setCharacterSize(fontSize);
     scoreLabel.setPosition(offsetFromWindowEdge, y);
-    scoreLabel.setString(std::to_string(Game::get()->getScore()));
+    scoreLabel.setString(std::to_string(LevelManager::getScore()));
 
     levelLabel.setFont(font);
     levelLabel.setCharacterSize(fontSize);

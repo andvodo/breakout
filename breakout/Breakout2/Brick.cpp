@@ -19,7 +19,7 @@ int Brick::getBreakScore() const
 	return breakScore;
 }
 
-void Brick::onHit() {
+int Brick::onHit() {
 
 	switch (brickType) {
 		case BrickType::Impenetrable:
@@ -32,10 +32,11 @@ void Brick::onHit() {
 			break;
 		case BrickType::Soft:
 			setType(BrickType::None);
-			break;
+			return breakScore;
 		default:
 			break;
 	}
+	return 0;
 }
 
 void Brick::setType(BrickType brickType) {
@@ -44,11 +45,11 @@ void Brick::setType(BrickType brickType) {
 }
 
 void Brick::setAppearance(float width, float height, float xPos, float yPos, int breakScore) {
-	xPos = xPos;
-	yPos = yPos;
-	width = width;
-	height = height;
-	breakScore = breakScore;
+	this->xPos = xPos;
+	this->yPos = yPos;
+	this->width = width;
+	this->height = height;
+	this->breakScore = breakScore;
 
 	if (brickType == BrickType::None) {
 		return;

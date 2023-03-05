@@ -2,22 +2,21 @@
 #include "LevelManager.h"
 #include "tinyxml2.h"
 #include <stdio.h>
-#include <cassert>
 
 Level* LevelManager::currentLevel = nullptr;
 std::map<int, Level> LevelManager::levels;
+int LevelManager::score = 0;
 
 const Level* LevelManager::getLevel(int level)
 {
-	auto it = levels.find(level);
+	auto it = levels.find(level - 1);
 	if (it != levels.end()) {
 		return &it->second;
 	} else {
 		try {
 			levels.emplace(level - 1, Level(level));
 			return &levels.at(level - 1);
-		}
-		catch (NoLevelException e) {
+		} catch (NoLevelException e) {
 			return nullptr;
 		}
 	}
@@ -25,16 +24,27 @@ const Level* LevelManager::getLevel(int level)
 
 bool LevelManager::setLevel(int level)
 {
-	assert(level > 0);
 	const Level* levelObj = getLevel(level);
 	if (levelObj) {
 		currentLevel = new Level(*levelObj);
+		score = 0;
+		currentLevel->setAppearance();
 		return true;
 	}
 	return false;
 }
 
-Level* LevelManager::getCurrentLevel()
+const Level* LevelManager::getCurrentLevel()
 {
 	return currentLevel;
+}
+
+void LevelManager::onHit(int i, int j)
+{
+	score += currentLevel->onHit(i, j);
+}
+
+bool LevelManager::levelCleared()
+{
+	return score >= currentLevel->getWinScore();
 }

@@ -12,6 +12,8 @@ class Parameters
 		const static int PLAYER_HEIGHT= 5;
 		const static int PLAYER_LIVES = 5;
 		constexpr static float MAX_BRICK_AREA = 0.5f;
+		constexpr static float BALL_RADIUS = 5.f;
+		constexpr static float BALL_SPEED = 1.5f;
 
 	public:
 		static int getWindowWidth() { return WINDOW_WIDTH; }
@@ -25,5 +27,7 @@ class Parameters
 		static int getPlaygroundBottom() { return WINDOW_HEIGHT - BOTTOM_OFFSET - WALL_THICKNESS; }
 		static int getPlayerLives() { return PLAYER_LIVES; }
 		static float getMaxBrickArea() { return MAX_BRICK_AREA; }
+		static float getBallRadius() { return BALL_RADIUS; }
+		static float getBallSpeed() { return BALL_SPEED; }
 };
 

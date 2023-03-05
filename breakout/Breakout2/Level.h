@@ -26,6 +26,7 @@ class Level
 	public:
 		Level(int level);
 		Level(const Level& level);
+		Level(Level&& level) = default;
 
 		int getRowCount() const { return rowCount; }
 		int getColumnCount() const { return columnCount; }
@@ -35,7 +36,7 @@ class Level
 		const std::string& getBackgroundTexture() const { return backgroundTexture; }
 
 		const BrickData& getBrickDataForType(BrickType type) const;
-		const std::vector<std::vector<Brick>>& getBricks();
-		void onHit(int row, int column);
+		const std::vector<std::vector<Brick>>& getBricks() const;
+		int onHit(int row, int column);
 		void setAppearance();
 };
