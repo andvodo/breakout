@@ -6,15 +6,17 @@
 class LevelManager
 {
 	private:
-		static std::map<int, Level> levels;
-		static const Level* getLevel(int level);
-		static Level* currentLevel;
-		static int score;
+		std::map<int, Level> levels;
+		const Level* getLevel(int level);
+		Level* currentLevel;
+		int score, level;
 
 	public:
-		static bool setLevel(int level);
-		static const Level* getCurrentLevel();
-		static void onHit(int i, int j);
-		static int getScore() { return score; }
-		static bool levelCleared();
+		LevelManager();
+		bool setNextLevel();
+		const Level* getCurrentLevel() const;
+		void onHit(int i, int j);
+		int getScore() const { return score; }
+		int getLevel() const { return level; }
+		bool levelCleared() const;
 };

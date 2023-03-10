@@ -38,7 +38,8 @@ void Ball::update() {
 	position = Vector2f(position.x + deltaX, position.y + deltaY);
 	circleShape.setPosition(position);
 	
-	const Level* level = LevelManager::getCurrentLevel();
+	const LevelManager& levelManager = Game::get()->getLevelManager();
+	const Level* level = levelManager.getCurrentLevel();
 	const std::vector<std::vector<Brick>>& bricks = level->getBricks();
 	Brick templateBrick = bricks.at(0).at(0);
 	if (position.y <= level->getRowCount() * (level->getRowSpacing() + templateBrick.getHeight())) {
@@ -84,7 +85,7 @@ void Ball::update() {
 					maxDepthPosition = info.position;
 				}
 			}
-			LevelManager::onHit(maxDepthBrick.first, maxDepthBrick.second);
+			Game::get()->onHit(maxDepthBrick.first, maxDepthBrick.second);
 			bounce(maxDepthPosition, maxDepth);
 			return;
 		}

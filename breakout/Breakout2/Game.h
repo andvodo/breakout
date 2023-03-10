@@ -1,6 +1,7 @@
 #pragma once
 #include "Ball.h"
 #include "GameScreen.h"
+#include "LevelManager.h"
 #include "Parameters.h"
 #include "Player.h"
 #include <vector>
@@ -13,9 +14,10 @@ class Game
 		const Player& getPlayer() { return player; }
 		const Ball& getBall() { return ball; }
 		const GameScreen& getGameScreen() { return screen; }
-		int getLevel() { return level; }
 		int getLives() { return lives; }
 		GameState getGameState() { return gameState; }
+		const LevelManager& getLevelManager() { return levelManager; };
+		void onHit(int i, int j);
 
 	private:
 		static Game* instance;
@@ -24,13 +26,13 @@ class Game
 		Ball ball;
 		Player player;
 		GameScreen screen;
+		LevelManager levelManager;
 
 		bool playing, processingClick;
-		int level, lives;
+		int lives;
 
 		bool setGame();
 		void startGame();
-		void setNewLevel();
 		void processClick();
 		void update();
 };

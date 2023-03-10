@@ -39,12 +39,13 @@ sf::Vector2i GameScreen::getPosition() const
 
 void GameScreen::display(GameState state)
 {
-    int level = Game::get()->getLevel();
-    int score = LevelManager::getScore();
+    const LevelManager& levelManager = Game::get()->getLevelManager();
+    int level = levelManager.getLevel();
+    int score = levelManager.getScore();
 
     renderWindow.clear();
     renderWindow.draw(spriteBackground);
-    const std::vector<std::vector<Brick>>& bricks = LevelManager::getCurrentLevel()->getBricks();
+    const std::vector<std::vector<Brick>>& bricks = levelManager.getCurrentLevel()->getBricks();
     for (const std::vector<Brick>& brickRow: bricks) {
         for (const Brick& brick: brickRow) {
             renderWindow.draw(brick.toDrawable());
@@ -73,7 +74,7 @@ void GameScreen::display(GameState state)
 
 void GameScreen::update()
 {
-    scoreLabel.setString(std::to_string(LevelManager::getScore()));
+    scoreLabel.setString(std::to_string(Game::get()->getLevelManager().getScore()));
 }
 
 void GameScreen::setAppearance()
@@ -88,7 +89,7 @@ void GameScreen::updateAppearance(GameState state)
     switch (state) {
     case GameState::SetNewLevel:
         livesLabel.setString(std::to_string(Game::get()->getLives()));
-        levelLabel.setString(std::to_string(Game::get()->getLevel()));
+        levelLabel.setString(std::to_string(Game::get()->getLevelManager().getLevel()));
         break;
     case GameState::LostLife:
         livesLabel.setString(std::to_string(Game::get()->getLives()));
@@ -99,8 +100,8 @@ void GameScreen::updateAppearance(GameState state)
         break;
     case GameState::Intro:
         livesLabel.setString(std::to_string(Game::get()->getLives()));
-        levelLabel.setString(std::to_string(Game::get()->getLevel()));
-        scoreLabel.setString(std::to_string(LevelManager::getScore()));
+        levelLabel.setString(std::to_string(Game::get()->getLevelManager().getLevel()));
+        scoreLabel.setString(std::to_string(Game::get()->getLevelManager().getScore()));
         break;
     case GameState::GameWon:
         messageLabel.setString(WIN_MESSAGE);
@@ -109,7 +110,7 @@ void GameScreen::updateAppearance(GameState state)
 }
 
 void GameScreen::setBackground() {
-    const Level* level = LevelManager::getCurrentLevel();
+    const Level* level = Game::get()->getLevelManager().getCurrentLevel();
     sf::Image image;
     image.loadFromFile(level->getBackgroundTexture());
     textureBackground.loadFromImage(image);
@@ -139,12 +140,12 @@ void GameScreen::setLabels()
     scoreLabel.setFont(font);
     scoreLabel.setCharacterSize(fontSize);
     scoreLabel.setPosition(offsetFromWindowEdge, y);
-    scoreLabel.setString(std::to_string(LevelManager::getScore()));
+    scoreLabel.setString(std::to_string(game->getLevelManager().getScore()));
 
     levelLabel.setFont(font);
     levelLabel.setCharacterSize(fontSize);
     levelLabel.setPosition(Parameters::getWindowWidth() / 2 + 80, y);
-    levelLabel.setString(std::to_string(game->getLevel()));
+    levelLabel.setString(std::to_string(game->getLevelManager().getLevel()));
 
     levelTextLabel.setFont(font);
     levelTextLabel.setCharacterSize(fontSize);

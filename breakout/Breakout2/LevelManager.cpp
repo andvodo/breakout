@@ -3,9 +3,11 @@
 #include "tinyxml2.h"
 #include <stdio.h>
 
-Level* LevelManager::currentLevel = nullptr;
-std::map<int, Level> LevelManager::levels;
-int LevelManager::score = 0;
+LevelManager::LevelManager()
+{
+	level = 0;
+	score = 0;
+}
 
 const Level* LevelManager::getLevel(int level)
 {
@@ -22,8 +24,9 @@ const Level* LevelManager::getLevel(int level)
 	}
 }
 
-bool LevelManager::setLevel(int level)
+bool LevelManager::setNextLevel()
 {
+	++level;
 	const Level* levelObj = getLevel(level);
 	if (levelObj) {
 		currentLevel = new Level(*levelObj);
@@ -34,7 +37,7 @@ bool LevelManager::setLevel(int level)
 	return false;
 }
 
-const Level* LevelManager::getCurrentLevel()
+const Level* LevelManager::getCurrentLevel() const
 {
 	return currentLevel;
 }
@@ -44,7 +47,7 @@ void LevelManager::onHit(int i, int j)
 	score += currentLevel->onHit(i, j);
 }
 
-bool LevelManager::levelCleared()
+bool LevelManager::levelCleared() const
 {
 	return score >= currentLevel->getWinScore();
 }

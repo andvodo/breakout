@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "LevelManager.h"
 
 using namespace sf;
 
@@ -23,9 +22,7 @@ bool Game::initAndStart()
 }
 
 bool Game::setGame() {
-    level = 1;
-
-    if (!LevelManager::setLevel(level)) {
+    if (!levelManager.setNextLevel()) {
         return false;
     }
 
@@ -40,6 +37,11 @@ bool Game::setGame() {
     gameState = GameState::Intro;
 
     return true;
+}
+
+void Game::onHit(int i, int j)
+{
+    levelManager.onHit(i, j);
 }
 
 void Game::startGame() {
@@ -77,13 +79,13 @@ void Game::startGame() {
 
 void Game::update()
 {
-    if (LevelManager::levelCleared()) {
+    if (levelManager.levelCleared()) {
         ball.setPlaying(false);
         player.setPlaying(false);
 
-        bool levelSet = LevelManager::setLevel(level + 1);
+        bool levelSet = levelManager.setNextLevel();
         if (levelSet) {
-            setNewLevel();
+            screen.updateAppearance(GameState::SetNewLevel);
             gameState = GameState::LevelReady;
         }
         else {
@@ -113,12 +115,6 @@ void Game::update()
         }
         screen.updateAppearance(gameState);
     }
-}
-
-void Game::setNewLevel()
-{
-    ++level;
-    screen.updateAppearance(GameState::SetNewLevel);
 }
 
 void Game::processClick()

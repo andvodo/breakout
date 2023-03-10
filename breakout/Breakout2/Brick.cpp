@@ -60,7 +60,7 @@ void Brick::setAppearance(float width, float height, float xPos, float yPos, int
 }
 
 void Brick::loadTexture() {
-	const BrickData& data = LevelManager::getCurrentLevel()->getBrickDataForType(brickType);
+	const BrickData& data = Game::get()->getLevelManager().getCurrentLevel()->getBrickDataForType(brickType);
 	std::string tex = data.getTexture();
 	Image image;
 	image.loadFromFile(tex);
@@ -85,7 +85,7 @@ CollisionInfo Brick::getCollisionInfo(Vector2f ballPosition, float radius) const
 		info.position = Position::None;
 		return info;
 	}
-	const Level* level = LevelManager::getCurrentLevel();
+	const Level* level = Game::get()->getLevelManager().getCurrentLevel();
 	int columnSpacing = level->getColumnSpacing();
 	int rowSpacing = level->getRowSpacing();
 
